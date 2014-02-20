@@ -1,0 +1,14 @@
+<library path="lib/libcpjoy_to_ackermann">
+  <class type="control_panel::CPJoyToAckermannPlugin" base_class_type="control_panel::ControlPanelPlugin">
+    <description>
+      Joy To Ackermann#sensor_msgs/Joy,ackermann_msgs/AckermannDrive#Creates AckermannDrive messages based on Joy messages
+    </description>
+  </class>
+</library>
+<library path="lib/libcpkeydriveackermann">
+  <class type="control_panel::CPKeyDriveAckermannPlugin" base_class_type="control_panel::ControlPanelPlugin">
+    <description>
+      Ackermann Key Drive#ackermann_msgs/AckermannDrive#Creates AckermannDrive messages based on WASD control
+    </description>
+  </class>
+</library>
