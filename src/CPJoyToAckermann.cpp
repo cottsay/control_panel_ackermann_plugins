@@ -17,8 +17,10 @@ CPJoyToAckermannPlugin::CPJoyToAckermannPlugin() :
     nodelet_priv(new joy_to_ackermann::joy_to_ackermann_nodelet(false))
 {
     ui->setupUi(this);
-    ui->label->setText("CP Joy To Ackermann");
-    ui->label->setEnabled(false);
+    connect(this, SIGNAL(changeLabel(const QString &)), ui->label, SLOT(setText(const QString &)));
+    connect(this, SIGNAL(changeEnabled(bool)), ui->label, SLOT(setEnabled(bool)));
+    emit changeLabel("CP Joy To Ackermann");
+    emit changeEnabled(false);
 }
 
 CPJoyToAckermannPlugin::~CPJoyToAckermannPlugin()
@@ -35,19 +37,19 @@ void CPJoyToAckermannPlugin::start()
     }
     settings->setValue(uuid.toString() + "/Active", true);
     nodelet_priv->start();
-    ui->label->setEnabled(true);
+    emit changeEnabled(true);
 }
 
 void CPJoyToAckermannPlugin::stop()
 {
-    ui->label->setEnabled(false);
+    emit changeEnabled(false);
     nodelet_priv->stop();
     settings->setValue(uuid.toString() + "/Active", false);
 }
 
 void CPJoyToAckermannPlugin::setup()
 {
-    ui->label->setText(settings->value(uuid.toString() + "/Label", ui->label->text()).toString());
+    emit changeLabel(settings->value(uuid.toString() + "/Label", ui->label->text()).toString());
     linear_scale = settings->value(uuid.toString() + "/LinearScale", linear_scale).toFloat();
     nodelet_priv->set_linear_scale(linear_scale);
     angular_scale = settings->value(uuid.toString() + "/AngularScale", angular_scale).toFloat();
@@ -115,7 +117,7 @@ void CPJoyToAckermannPlugin::configDialog()
 
     if(ui->label->text() != labeledit->text())
     {
-        ui->label->setText(labeledit->text());
+        emit changeLabel(labeledit->text());
         settings->setValue(uuid.toString() + "/Label", labeledit->text());
     }
 

@@ -30,6 +30,10 @@ public slots:
     void configDialog();
     void setActive(bool active);
 
+signals:
+    void changeLabel(const QString &);
+    void changeEnabled(bool);
+
 protected:
     void contextMenuEvent(QContextMenuEvent *event);
     

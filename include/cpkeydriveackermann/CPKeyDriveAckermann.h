@@ -56,6 +56,10 @@ public slots:
     void keyUpCB(QKeyEvent *event);
     void timerCB();
 
+signals:
+    void changeLabel(const QString &);
+    void changeEnabled(bool);
+
 protected:
     void contextMenuEvent(QContextMenuEvent *event);
 
